@@ -34,7 +34,7 @@ The vectors are partitioned as:
              lambda;        # LAMBDA    : index-1 algebraic variable; is provided by integrator (used in model)
              mue        ]   # MUE       : stabilizing variable to reduce higher index to index 1; is provided by integrator (used in model)
 
-   residue = [fd_exp;       #           : residue of explicitly solved fd equations; computed by code below (e.g. if x[1] = phi and x[2] = v (= der(phi)), then residue[1] = derx[1] - v)
+   residue = [fd_exp;       #           : residue of explicitly solved fd equations; computed by code below (e.g. if x[1] = phi and x[2] = v (= der(phi)), then residue[1] = v- derx[1])
               fd_imp;       # FD_IMP    : residue of implicitly solved fd equations (is provided by model)
               fc]           # FC        : residue of fc equations (is provided by model)
 

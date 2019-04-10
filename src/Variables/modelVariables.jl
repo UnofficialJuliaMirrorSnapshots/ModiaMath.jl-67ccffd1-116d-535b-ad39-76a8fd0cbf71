@@ -125,10 +125,12 @@ end
 
 
 function add_xName!(v::RealVariable, vnumType, xNames, ix_beg)
-    if vnumType == XD_EXP || vnumType == XD_IMP || vnumType == XA || vnumType == MUE
+    if vnumType == XD_EXP || vnumType == XD_IMP || vnumType == XA
         name = string(instanceName(v))
     elseif vnumType == LAMBDA
         name = "integral(" * string(instanceName(v)) * ")"
+    elseif vnumType == MUE
+        name = "integral(" * string(instanceName(v)) * ")"		
     else
         error("... should not occur")
     end
@@ -407,6 +409,12 @@ function get_xTable(m::ModelVariables)
 
     for v in m.x_var
         push!(x_table, [Symbol("x[", vecIndex(v), "]"), instanceName(v), v.fixed, v.start])
+    end
+
+    # include integral(lambda) and integral(mue)
+    for i in m.nx_imp_var+1:length(m.derx_var)
+        v = m.derx_var[i]
+        push!(x_table, [Symbol("x[", vecIndex(v), "]"), Symbol("integral(",instanceName(v),")"), false, 0.0])
     end
     return x_table
 end
